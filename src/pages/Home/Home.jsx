@@ -10,25 +10,46 @@ class Home extends React.Component {
         {
           name: 'red',
           color: '#d64a4a',
+          isSmall: false,
         },
         {
           name: 'blue',
           color: '#6663f3',
+          isSmall: false,
         },
         {
           name: 'green',
           color: '#47b96c',
+          isSmall: false,
         },
         {
           name: 'magenta',
           color: '#b848b9',
+          isSmall: false,
         },
         {
           name: 'orange',
           color: '#f99a06',
+          isSmall: false,
         },
       ],
     };
+  }
+
+  handleOnClick = (name) => {
+    console.log(name);
+    let newCylinders = [...this.state.cylinders]
+    newCylinders = newCylinders.map(item => {
+      if (item.name === name) {
+        item.isSmall = !item.isSmall ? true : false;
+      } else if (name === 'orange' || name === 'magenta') {
+        item.isSmall = false;
+      }
+      return item;
+    }) 
+      this.setState({
+        cylinders: newCylinders,
+    });
   }
 
   render() {
@@ -39,7 +60,12 @@ class Home extends React.Component {
         <ul className={styles.list}>
           {cylinders.map((item, index) => (
             <li key={index}>
-              <Cylinder color={item.color} name={item.name} />
+              <Cylinder
+                color={item.color}
+                name={item.name}
+                isSmall={item.isSmall}
+                onClick={() => {this.handleOnClick(item.name)}}
+              />
             </li>
           ))}
         </ul>
